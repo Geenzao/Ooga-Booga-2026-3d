@@ -171,6 +171,15 @@ public class StatsManager : MonoBehaviour
         OnBugMeterUpdated(_bugMeter, oldBugs);
     }
 
+    public void AmassMoney()
+    {
+        int oldMoney = _money;
+
+        _money += MONEY_PER_SEC_PER_LVL[XPLvl];
+
+        OnMoneyUpdated(_money, oldMoney);
+    }
+
     // Augmente le niveau d'amélioration de la bouffe
     public int UpgradeFoodLvl()
     {
@@ -289,7 +298,8 @@ public class StatsManager : MonoBehaviour
             // TODO : Gérer les bugs par secondes et le fais de se faire virer. Max de bugs : MAX_BUG_PER_SCREEN_HEIGHT
             ComputeBugs();
 
-            // TODO : Gérer l'argent par secondes. Grade d'employé : XPLvl, Argent par grade : MONEY_PER_SEC_PER_LVL
+            // TODO : Gérer l'argent par secondes. Grade d'employé : XPLvl, Argent par grade : MONEY_PER_SEC_PER_LVL*
+            AmassMoney();
 
 
             ////TESTS
