@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.EventSystems;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
     private GameStateManager _gameStateManager;
+    [SerializeField] private TMP_InputField inputField;
 
     [SerializeField] private GameObject _statsPanel;
     [SerializeField] private GameObject _bossPanel;
@@ -47,6 +50,7 @@ public class UIManager : MonoBehaviour
             go.SetActive(false);
         foreach (GameObject go in activate)
             go.SetActive(true);
+            
         //await FadeToNormal();
     }
 
@@ -75,11 +79,16 @@ public class UIManager : MonoBehaviour
                 if (oldState == GameStateManager.GameState.IN_OFFICE)
                 {
                     await SwitchUIAsync(new List<GameObject> { _shopPanel }, new List<GameObject> { _bossPanel, _statsPanel });
+                    await Task.Yield(); // Attendre une frame pour que l'UI soit bien activée
+                    inputField.Select();
+                    inputField.ActivateInputField();
                 }
                 else
                 {
                     _statsPanel.SetActive(true);
                     _bossPanel.SetActive(true);
+                    inputField.Select();
+                    inputField.ActivateInputField();
                     _shopPanel.SetActive(false);
                 }
                 break;
