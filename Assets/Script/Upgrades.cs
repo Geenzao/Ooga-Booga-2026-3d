@@ -62,9 +62,9 @@ public class Upgrades : MonoBehaviour
         }
 
         // Vérifier si le joueur a assez d'argent pour améliorer la qualité de nourriture
-        if (_statsmanager.FoodLvl < _statsmanager.PRICE_PER_FOOD_LVL.Length)
+        if (_statsmanager.FoodLvl < _statsmanager.PRICE_UPGRADE_FOOD.Length)
         {
-            int nextUpgradePrice = _statsmanager.PRICE_PER_FOOD_LVL[_statsmanager.FoodLvl];
+            int nextUpgradePrice = _statsmanager.PRICE_UPGRADE_FOOD[_statsmanager.FoodLvl];
             _upgradeFoodQualityBtn.interactable = _statsmanager.Money >= nextUpgradePrice;
             _upgradeFoodQualityText.text = $"Upgrade Food Quality \n{nextUpgradePrice}$";
         }

@@ -34,6 +34,7 @@ public class StatsManager : MonoBehaviour
     private int _foodLvl = 0; // Le niveau de bouffe qu'on a
     public readonly int[] FOOD_PER_BITE = new int[] { 5, 10, 15 }; // la bouffe remise dans la barre a chaque croc
     public readonly int[] PRICE_PER_FOOD_LVL = new int[] { 2, 3 }; // Le prix de la bouffe a chaque lvl d'amélioration
+    public readonly int[] PRICE_UPGRADE_FOOD = new int[] { 20, 40 }; // Le prix de l'amélioration de la bouffe 
     public event Action<int, int> OnFoodUpdated;
 
 
@@ -57,7 +58,7 @@ public class StatsManager : MonoBehaviour
     public readonly int[] PRICE_UPGRADE_SCREEN_HEIGHT = new int[] { 20, 80, 160 }; // Nombre max de bug par niveau d'amélioration
 
 #if UNITY_EDITOR
-    private int _money = 50000; // L'argent qu'on a actuellement
+    private int _money = 50; // L'argent qu'on a actuellement
 #else
     private int _money = 0; // L'argent qu'on a actuellement
 #endif
@@ -174,8 +175,8 @@ public class StatsManager : MonoBehaviour
     public int UpgradeFoodLvl()
     {
         Debug.Log("Food level avant : " + (_foodLvl + 1) + ", Argent avant : " + Money);
-        if(_foodLvl +1 <= PRICE_PER_FOOD_LVL.Length)
-            if(Pay(PRICE_PER_FOOD_LVL[_foodLvl]))
+        if(_foodLvl +1 <= PRICE_UPGRADE_FOOD.Length)
+            if(Pay(PRICE_UPGRADE_FOOD[_foodLvl]))
                 _foodLvl += 1;
 
         Debug.Log("Food level : " + (_foodLvl + 1) + ", Argent restant : " + Money);
