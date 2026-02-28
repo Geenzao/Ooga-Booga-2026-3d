@@ -12,6 +12,8 @@ using UnityEngine.UI;
 
 public class Ecriveur : MonoBehaviour
 {
+    private StatsManager _statsmanager;
+
     [SerializeField] private TMP_Text sentencePrevious;
     [SerializeField] private TMP_Text sentenceActual;
     [SerializeField] private TMP_Text SayedToBoss;
@@ -167,6 +169,7 @@ public class Ecriveur : MonoBehaviour
 
     void Start()
     {
+        _statsmanager = StatsManager.Instance;
         //Placement de premières phrases
         SayedToBoss.text = "";
         textPrevious = "";
@@ -184,12 +187,12 @@ public class Ecriveur : MonoBehaviour
         //Vérification des erreurs
         if (character == textActual[indexOfActualCharacter])
         {
-            //TODO:IncreaseXP
+            _statsmanager.BonusXP();
         }
         else
         {
             indexesOfErrorsInActualSentence.Add(indexOfActualCharacter);
-            //TODO:LowerXP
+            _statsmanager.MalusXP();
         }
         indexOfActualCharacter++;
         if (indexOfActualCharacter >= textActual.Length)

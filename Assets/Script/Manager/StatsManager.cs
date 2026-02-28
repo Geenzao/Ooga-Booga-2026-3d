@@ -86,7 +86,7 @@ public class StatsManager : MonoBehaviour
             int currentLvl = 0;
             foreach(int lvl in XP_THRESHOLDS)
             {
-                if(_xp > lvl)
+                if(_xp >= lvl)
                     currentLvl ++;
             }
             return currentLvl;
@@ -134,9 +134,9 @@ public class StatsManager : MonoBehaviour
         if(_money - money >= 0)
         {
             _money -= money;
+            OnMoneyUpdated?.Invoke(_money, oldMoney);
             return true;
         }
-        OnMoneyUpdated?.Invoke(_money, oldMoney);
         return false;
     }
     // Remet de la bouffe dans la barre de bouffe
@@ -151,7 +151,9 @@ public class StatsManager : MonoBehaviour
     public void Starve(int nb)
     {
         int oldFood = _foodMeter;
-        if ((_foodMeter -= nb) <= 0) { ; } //TODO die
+        if ((_foodMeter -= nb) <= 0) {
+            GameStateManager.Instance.GameStatus = GameStateManager.GameState.DEAD;        
+        } //TODO die
         _foodMeter -= nb;
         OnFoodUpdated?.Invoke(_foodMeter, oldFood);
     }
@@ -189,11 +191,18 @@ public class StatsManager : MonoBehaviour
     public void MalusXP()
     {
         int currentXPLevel = XPLvl;
+        int downLimit;
+        if (currentXPLevel <= 0)
+            downLimit = 0;
+        else
+            downLimit = XP_THRESHOLDS[currentXPLevel - 1];
+
         int oldXP = _xp;
-        if ((_xp += XP_PER_BAD_LETTER) >= XP_THRESHOLDS[currentXPLevel - 1])
+
+        if ((_xp + XP_PER_BAD_LETTER) >= downLimit)
             _xp += XP_PER_BAD_LETTER;
         else
-            _xp = XP_THRESHOLDS[currentXPLevel - 1];
+            _xp = downLimit;
         OnXPUpdated(_xp, oldXP);
     }
 
@@ -248,6 +257,7 @@ public class StatsManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
     }
 
     public void Reset()
@@ -258,6 +268,7 @@ public class StatsManager : MonoBehaviour
     private void Init()
     {
         // TODO : initialiser toute les valeur pour le départ et le reset
+        OnMoneyUpdated?.Invoke(Money, 0);
     }
 
     // Update is called once per frame
@@ -277,6 +288,9 @@ public class StatsManager : MonoBehaviour
 
             // TODO : Gérer l'argent par secondes. Grade d'employé : XPLvl, Argent par grade : MONEY_PER_SEC_PER_LVL
 
+
+            ////TESTS
+            //BonusXP();
 
             _timer = 0f;
         }
