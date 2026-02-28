@@ -1,10 +1,13 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class StatsBars : MonoBehaviour
 {
     [SerializeField] private Image _foodbar;
+    [SerializeField] private Image _bugsbar;
     [SerializeField] private Image _xpbar;
+    [SerializeField] private TextMeshProUGUI _moneyAmountText;
 
     private StatsManager _statsmanager;
 
@@ -16,7 +19,30 @@ public class StatsBars : MonoBehaviour
 
     private void HandleBugsUpdated(int newVal, int oldVal)
     {
-        updateBar(_xpbar, (float)newVal / (float)_statsmanager.CurrentMaxBugs);
+        updateBar(_bugsbar, (float)newVal / (float)_statsmanager.CurrentMaxBugs);
+    }
+
+    private void HandleXPUpdated(int newVal, int oldVal)
+    {
+        int currentLevelAllXp;
+        int currentLevelXp;
+        if (_statsmanager.XPLvl <= 0)
+        {
+            currentLevelAllXp = _statsmanager.XP_THRESHOLDS[_statsmanager.XPLvl];
+            currentLevelXp = _statsmanager.XP;
+        }
+        else
+        {
+            currentLevelAllXp = _statsmanager.XP_THRESHOLDS[_statsmanager.XPLvl] - _statsmanager.XP_THRESHOLDS[_statsmanager.XPLvl - 1];
+            currentLevelXp = _statsmanager.XP - _statsmanager.XP_THRESHOLDS[_statsmanager.XPLvl - 1];
+        }
+        float percent = (float)currentLevelXp / (float)currentLevelAllXp;
+        updateBar(_xpbar, percent);
+    }
+
+    private void HandleMoneyUpdated(int newVal, int oldVal)
+    {
+        _moneyAmountText.text = newVal + "$";
     }
 
     private void Start()
@@ -24,6 +50,8 @@ public class StatsBars : MonoBehaviour
         _statsmanager = StatsManager.Instance;
         _statsmanager.OnFoodUpdated += HandleFoodUpdated;
         _statsmanager.OnBugMeterUpdated += HandleBugsUpdated;
+        _statsmanager.OnXPUpdated += HandleXPUpdated;
+        _statsmanager.OnMoneyUpdated += HandleMoneyUpdated;
     }
 
     private void updateBar(Image to_update, float amount)
@@ -34,6 +62,5 @@ public class StatsBars : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    
     }
 }

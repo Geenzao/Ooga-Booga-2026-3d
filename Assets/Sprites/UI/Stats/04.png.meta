@@ -1032,7 +1032,7 @@ TextureImporter:
         height: 13
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 8, y: 1, z: 8, w: 1}
       customData: 
       outline: []
       physicsShape: []
@@ -1488,13 +1488,13 @@ TextureImporter:
       name: 04_48
       rect:
         serializedVersion: 2
-        x: 54
-        y: 116
-        width: 36
-        height: 7
+        x: 55
+        y: 117
+        width: 34
+        height: 5
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 2, y: 1, z: 2, w: 1}
       customData: 
       outline: []
       physicsShape: []
@@ -2082,13 +2082,13 @@ TextureImporter:
       name: 04_75
       rect:
         serializedVersion: 2
-        x: 56
-        y: 53
-        width: 34
-        height: 7
+        x: 57
+        y: 55
+        width: 32
+        height: 4
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 2, y: 0, z: 2, w: 1}
       customData: 
       outline: []
       physicsShape: []
@@ -2672,6 +2672,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: 04_102
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 59
+        width: 1
+        height: 1
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a519541e8b03ea47b31f75fc8d95436
+      internalID: 671776776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -2691,6 +2713,7 @@ TextureImporter:
       04_10: -6347170087755370290
       04_100: 5410744438882262914
       04_101: -6544744483584436721
+      04_102: 671776776
       04_11: -2032869193570258666
       04_12: -1101283234647339766
       04_13: 6987741722879222119

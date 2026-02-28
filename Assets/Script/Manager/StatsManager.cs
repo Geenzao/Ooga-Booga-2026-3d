@@ -134,9 +134,9 @@ public class StatsManager : MonoBehaviour
         if(_money - money >= 0)
         {
             _money -= money;
+            OnMoneyUpdated?.Invoke(_money, oldMoney);
             return true;
         }
-        OnMoneyUpdated?.Invoke(_money, oldMoney);
         return false;
     }
     // Remet de la bouffe dans la barre de bouffe
@@ -151,7 +151,9 @@ public class StatsManager : MonoBehaviour
     public void Starve(int nb)
     {
         int oldFood = _foodMeter;
-        if ((_foodMeter -= nb) <= 0) { ; } //TODO die
+        if ((_foodMeter -= nb) <= 0) {
+            GameStateManager.Instance.GameStatus = GameStateManager.GameState.DEAD;        
+        } //TODO die
         _foodMeter -= nb;
         OnFoodUpdated?.Invoke(_foodMeter, oldFood);
     }
@@ -248,6 +250,7 @@ public class StatsManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
     }
 
     public void Reset()
@@ -258,6 +261,7 @@ public class StatsManager : MonoBehaviour
     private void Init()
     {
         // TODO : initialiser toute les valeur pour le départ et le reset
+        OnMoneyUpdated?.Invoke(Money, 0);
     }
 
     // Update is called once per frame
@@ -277,6 +281,9 @@ public class StatsManager : MonoBehaviour
 
             // TODO : Gérer l'argent par secondes. Grade d'employé : XPLvl, Argent par grade : MONEY_PER_SEC_PER_LVL
 
+
+            //TESTS
+            BonusXP();
 
             _timer = 0f;
         }
