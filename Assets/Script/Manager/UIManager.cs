@@ -42,12 +42,12 @@ public class UIManager : MonoBehaviour
 
     private async Task SwitchUIAsync(List<GameObject> desac, List<GameObject> activate)
     {
-        await FadeToBlack();
+        //await FadeToBlack();
         foreach (GameObject go in desac)
             go.SetActive(false);
         foreach (GameObject go in activate)
             go.SetActive(true);
-        await FadeToNormal();
+        //await FadeToNormal();
     }
 
     private async void HandleGameStatusUpdated(GameStateManager.GameState newState, GameStateManager.GameState oldState)

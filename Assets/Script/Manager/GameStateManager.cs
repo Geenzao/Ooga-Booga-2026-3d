@@ -1,25 +1,9 @@
 using System;
 using UnityEngine;
-using Unity.Cinemachine;
 
 public class GameStateManager : MonoBehaviour
 {
     private static GameStateManager _instance;
-
-    [SerializeField] private CinemachineCamera _defaultCam;
-    [SerializeField] private CinemachineCamera _bossCam;
-
-    public void EnterFocus()
-    {
-        _bossCam.Priority = 20;
-        _defaultCam.Priority = 10;
-    }
-
-    public void ExitFocus()
-    {
-        _bossCam.Priority = 10;
-        _defaultCam.Priority = 20;
-    }
 
     public static GameStateManager Instance
     {
@@ -59,7 +43,7 @@ public class GameStateManager : MonoBehaviour
         {
             GameState oldGameState = _currentGameState;
             _currentGameState = value;
-            OnGameStatusUpdated(_currentGameState, oldGameState);
+            OnGameStatusUpdated?.Invoke(_currentGameState, oldGameState);
         }
     }
 
