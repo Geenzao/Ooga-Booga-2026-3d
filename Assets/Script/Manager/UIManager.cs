@@ -54,6 +54,14 @@ public class UIManager : MonoBehaviour
         //await FadeToNormal();
     }
 
+    private void SwitchUI(List<GameObject> desac, List<GameObject> activate)
+    {
+        foreach (GameObject go in desac)
+            go.SetActive(false);
+        foreach (GameObject go in activate)
+            go.SetActive(true);
+    }
+
     private async void HandleGameStatusUpdated(GameStateManager.GameState newState, GameStateManager.GameState oldState)
     {
         switch (newState)
@@ -64,33 +72,14 @@ public class UIManager : MonoBehaviour
             //    _shopPanel.SetActive(false);
             //    break;
             case GameStateManager.GameState.IN_OFFICE:
-                if (oldState == GameStateManager.GameState.IN_BOSS_OFFICE)
-                {
-                    await SwitchUIAsync(new List<GameObject> { _bossPanel }, new List<GameObject> { _shopPanel, _statsPanel });
-                }
-                else
-                {
-                    _statsPanel.SetActive(true);
-                    _bossPanel.SetActive(false);
-                    _shopPanel.SetActive(true);
-                }
+                SwitchUI(new List<GameObject> { _bossPanel }, new List<GameObject> { _shopPanel, _statsPanel });
                 break;
             case GameStateManager.GameState.IN_BOSS_OFFICE:
-                if (oldState == GameStateManager.GameState.IN_OFFICE)
-                {
-                    await SwitchUIAsync(new List<GameObject> { _shopPanel }, new List<GameObject> { _bossPanel, _statsPanel });
-                    await Task.Yield(); // Attendre une frame pour que l'UI soit bien activée
-                    inputField.Select();
-                    inputField.ActivateInputField();
-                }
-                else
-                {
-                    _statsPanel.SetActive(true);
-                    _bossPanel.SetActive(true);
-                    inputField.Select();
-                    inputField.ActivateInputField();
-                    _shopPanel.SetActive(false);
-                }
+                SwitchUI(new List<GameObject> { _shopPanel }, new List<GameObject> { _bossPanel, _statsPanel });
+                inputField.Select();
+                inputField.ActivateInputField();
+                break;
+            case GameStateManager.GameState.DEAD:
                 break;
 
         }

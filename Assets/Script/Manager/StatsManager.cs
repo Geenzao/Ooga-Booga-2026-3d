@@ -53,11 +53,14 @@ public class StatsManager : MonoBehaviour
 
 
     private int _screenLvl = 0; // La taille de l'écran qui augmente le nombre maximum de bug possibles
-    public readonly int[] MAX_BUG_PER_SCREEN_HEIGHT = new int[] { 100, 120, 140, 160, 180, 200 }; // Nombre max de bug par niveau d'amélioration
-    public readonly int[] PRICE_UPGRADE_SCREEN_HEIGHT = new int[] { 10, 20, 40, 80, 160 }; // Nombre max de bug par niveau d'amélioration
+    public readonly int[] MAX_BUG_PER_SCREEN_HEIGHT = new int[] { 100, 130, 160, 200 }; // Nombre max de bug par niveau d'amélioration
+    public readonly int[] PRICE_UPGRADE_SCREEN_HEIGHT = new int[] { 20, 80, 160 }; // Nombre max de bug par niveau d'amélioration
 
-
+#if UNITY_EDITOR
     private int _money = 50000; // L'argent qu'on a actuellement
+#else
+    private int _money = 0; // L'argent qu'on a actuellement
+#endif
     public readonly int[] MONEY_PER_SEC_PER_LVL = new int[] { 1, 5, 10 }; // Argent que l'on gagne toute les secondes
     public event Action<int, int> OnMoneyUpdated;
 
@@ -152,7 +155,7 @@ public class StatsManager : MonoBehaviour
     {
         int oldFood = _foodMeter;
         if ((_foodMeter -= nb) <= 0) {
-            GameStateManager.Instance.GameStatus = GameStateManager.GameState.DEAD;        
+            GameStateManager.Instance.GameStatus = GameStateManager.GameState.DEAD;
         } //TODO die
         _foodMeter -= nb;
         OnFoodUpdated?.Invoke(_foodMeter, oldFood);
@@ -257,7 +260,6 @@ public class StatsManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
     }
 
     public void Reset()
