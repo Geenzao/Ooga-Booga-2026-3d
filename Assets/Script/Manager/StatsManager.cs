@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class StatsManager : MonoBehaviour
@@ -21,19 +22,6 @@ public class StatsManager : MonoBehaviour
             return _instance;
         }
     }
-    
-    void Awake()
-    {
-        if (_instance == null)
-        {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else if (_instance != this)
-        {
-            Destroy(gameObject);
-        }
-    }
 
 /*-------------------------------------*
 *               VARIABLES              * 
@@ -42,16 +30,18 @@ public class StatsManager : MonoBehaviour
 
 
     private int _foodMeter = 100; // Jauge de bouffe qui baisse dans le temps et augmente quand on mange
-    public readonly int FOOD_USED_PER_SEC = -1; // On perd 1 de bouffe par seconde
+    public readonly int FOOD_USED_PER_SEC = 1; // On perd 1 de bouffe par seconde
     private int _foodLvl = 0; // Le niveau de bouffe qu'on a
     public readonly int[] FOOD_PER_BITE = new int[] { 5, 10, 15 }; // la bouffe remise dans la barre a chaque croc
     public readonly int[] PRICE_PER_FOOD_LVL = new int[] { 2, 3 }; // Le prix de la bouffe a chaque lvl d'amélioration
+    public event Action<int, int> OnFoodUpdated;
 
 
     private int _xp = 0; // Jauge d'XP, les lettres rapporte 1 et une erreur retire 5
     public readonly int XP_PER_GOOD_LETTER = 1; // l'xp que rapporte une lettre bonne
     public readonly int XP_PER_BAD_LETTER = -5; // l'xp que retire une mauvaise lettre
     public readonly int[] XP_THRESHOLDS = new int[] { 200, 650, 1500 }; // Les seuils atteindre pour changer de grade : stagiaire, employé, manager
+    public event Action<int, int> OnXPUpdated;
 
 
     private int _bugMeter; // Jauge de bug, elle augmente a chaque seconde 
@@ -59,6 +49,7 @@ public class StatsManager : MonoBehaviour
     private int _bugsPerClickLvl = 0; // le niveau d'amélioration du nombre de bugs par click
     public readonly int[] BUG_RESOLVE_PER_LVL = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }; // les bug résolu par lvl a chaque click sur l'ecran
     public readonly int[] PRICE_UPGRADE_BUG_RESOLVE= new int[] { 20, 50, 100, 170, 250, 340, 500, 700, 1000 }; // prix de chaque amélioration de l'éfficacité des clicks
+    public event Action<int, int> OnBugMeterUpdated;
 
 
     private int _screenLvl = 0; // La taille de l'écran qui augmente le nombre maximum de bug possibles
@@ -68,11 +59,13 @@ public class StatsManager : MonoBehaviour
 
     private int _money = 0; // L'argent qu'on a actuellement
     public readonly int[] MONEY_PER_SEC_PER_LVL = new int[] { 1, 5, 10 }; // Argent que l'on gagne toute les secondes
+    public event Action<int, int> OnMoneyUpdated;
 
-/*-------------------------------------*
-*           GETTER SETTER              * 
-*--------------------------------------*/
-    public int FoodMeter
+
+  /*-------------------------------------*
+  *           GETTER SETTER              * 
+  *--------------------------------------*/
+  public int FoodMeter
     {
         get { return _foodMeter; }
     }
@@ -105,6 +98,16 @@ public class StatsManager : MonoBehaviour
         get { return _bugMeter;}
     }
 
+    public int CurrentMaxBugs
+    {
+        get { return MAX_BUG_PER_SCREEN_HEIGHT[_screenLvl]; }
+    }
+
+    public int CurrentBugsPerSec
+    {
+        get { return BUG_PER_SEC_PER_XP_LVL[XPLvl]; }
+    }
+
     public int BugsPerClickLvl
     {
         get { return _bugsPerClickLvl;}
@@ -122,47 +125,74 @@ public class StatsManager : MonoBehaviour
     // Paye si possible et renvoie un booleen
     public bool Pay(int money)
     {
+        int oldMoney = _money;
         if(_money - money >= 0)
         {
             _money -= money;
             return true;
         }
+        OnMoneyUpdated?.Invoke(_money, oldMoney);
         return false;
     }
     // Remet de la bouffe dans la barre de bouffe
     public void Eat()
     {
+        int oldFood = _foodMeter;
         if (Pay(PRICE_PER_FOOD_LVL[_foodLvl]))
             _foodMeter += FOOD_PER_BITE[_foodLvl];
+        OnFoodUpdated?.Invoke(_foodMeter, oldFood);
     }
 
-    // Augmente le niveau de la bouffe
-    public void UpgradeFoodLvl()
+    public void Starve(int nb)
+    {
+        int oldFood = _foodMeter;
+        if ((_foodMeter -= nb) <= 0) { ; } //TODO die
+        _foodMeter -= nb;
+        OnFoodUpdated?.Invoke(_foodMeter, oldFood);
+    }
+
+    public void ComputeBugs()
+    {
+        int oldBugs = _bugMeter;
+        int newBugs = _bugMeter + CurrentBugsPerSec;
+        if (newBugs >= CurrentMaxBugs) { ; } //TODO viré, le mauvais développeur
+        _bugMeter = newBugs;
+        OnBugMeterUpdated(_bugMeter, oldBugs);
+    }
+
+    // Augmente le niveau d'amélioration de la bouffe
+    public int UpgradeFoodLvl()
     {
         if(_foodLvl +1 <= PRICE_PER_FOOD_LVL.Length)
             if(Pay(PRICE_PER_FOOD_LVL[_foodLvl]))
                 _foodLvl += 1;
-    }
+        return _foodLvl;
+  }
 
     // Ajoute de l'XP
     public void BonusXP()
     {
+        int oldXP = _xp;
         _xp += XP_PER_GOOD_LETTER;
+        OnXPUpdated(_xp, oldXP);
     }
 
     // Retire de l'XP
     public void MalusXP()
     {
-        int _xplvl = XPLvl;
-        if ((_xp += XP_PER_BAD_LETTER) >= XP_THRESHOLDS[_xplvl - 1])
+        int currentXPLevel = XPLvl;
+        int oldXP = _xp;
+        if ((_xp += XP_PER_BAD_LETTER) >= XP_THRESHOLDS[currentXPLevel - 1])
             _xp += XP_PER_BAD_LETTER;
         else
-            _xp = XP_THRESHOLDS[_xplvl - 1];
+            _xp = XP_THRESHOLDS[currentXPLevel - 1];
+        OnXPUpdated(_xp, oldXP);
     }
 
     // Résoud des bugs en les retirant du _bugMeter
     public int ResolveBug()
     {
+        int oldBugsCpt = _bugMeter;
         int toResolve = 0;
         if(_bugMeter - BUG_RESOLVE_PER_LVL[_bugsPerClickLvl] >= 0)
         {
@@ -174,6 +204,7 @@ public class StatsManager : MonoBehaviour
             toResolve = _bugMeter;
             _bugMeter = 0;
         }
+        OnBugMeterUpdated(_bugMeter, oldBugsCpt);
         return toResolve;
     }
 
@@ -194,6 +225,15 @@ public class StatsManager : MonoBehaviour
     void Start()
     {
         Init();
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (_instance != this)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void Reset()
@@ -216,8 +256,10 @@ public class StatsManager : MonoBehaviour
         if (_timer >= 1f)
         {
             // TODO : Gérer la bouffe par secondes et la mort de faim. FOOD_USED_PER_SEC
+            Starve(FOOD_USED_PER_SEC);
 
             // TODO : Gérer les bugs par secondes et le fais de se faire virer. Max de bugs : MAX_BUG_PER_SCREEN_HEIGHT
+            ComputeBugs();
 
             // TODO : Gérer l'argent par secondes. Grade d'employé : XPLvl, Argent par grade : MONEY_PER_SEC_PER_LVL
 
