@@ -57,7 +57,7 @@ public class StatsManager : MonoBehaviour
     public readonly int[] PRICE_UPGRADE_SCREEN_HEIGHT = new int[] { 10, 20, 40, 80, 160 }; // Nombre max de bug par niveau d'amélioration
 
 
-    private int _money = 500; // L'argent qu'on a actuellement
+    private int _money = 50000; // L'argent qu'on a actuellement
     public readonly int[] MONEY_PER_SEC_PER_LVL = new int[] { 1, 5, 10 }; // Argent que l'on gagne toute les secondes
     public event Action<int, int> OnMoneyUpdated;
 
