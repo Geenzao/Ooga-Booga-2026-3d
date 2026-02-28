@@ -57,7 +57,7 @@ public class StatsManager : MonoBehaviour
     public readonly int[] PRICE_UPGRADE_SCREEN_HEIGHT = new int[] { 10, 20, 40, 80, 160 }; // Nombre max de bug par niveau d'amélioration
 
 
-    private int _money = 0; // L'argent qu'on a actuellement
+    private int _money = 500; // L'argent qu'on a actuellement
     public readonly int[] MONEY_PER_SEC_PER_LVL = new int[] { 1, 5, 10 }; // Argent que l'on gagne toute les secondes
     public event Action<int, int> OnMoneyUpdated;
 
@@ -118,6 +118,11 @@ public class StatsManager : MonoBehaviour
         get { return _screenLvl;}
     }
 
+    public int Money
+    {
+        get { return _money;}
+    }
+
 /*-------------------------------------*
 *              FONCTIONS               * 
 *--------------------------------------*/
@@ -163,9 +168,12 @@ public class StatsManager : MonoBehaviour
     // Augmente le niveau d'amélioration de la bouffe
     public int UpgradeFoodLvl()
     {
+        Debug.Log("Food level avant : " + (_foodLvl + 1) + ", Argent avant : " + Money);
         if(_foodLvl +1 <= PRICE_PER_FOOD_LVL.Length)
             if(Pay(PRICE_PER_FOOD_LVL[_foodLvl]))
                 _foodLvl += 1;
+
+        Debug.Log("Food level : " + (_foodLvl + 1) + ", Argent restant : " + Money);
         return _foodLvl;
   }
 
@@ -210,16 +218,22 @@ public class StatsManager : MonoBehaviour
 
     public void UpgradeBugPerClickLvl()
     {
+        Debug.Log("Bug par clic avant : " + (_bugsPerClickLvl + 1) + ", Argent avant : " + Money);
         if(_bugsPerClickLvl +1 <= PRICE_UPGRADE_BUG_RESOLVE.Length)
             if(Pay(PRICE_UPGRADE_BUG_RESOLVE[_bugsPerClickLvl]))
                 _bugsPerClickLvl += 1;
+
+        Debug.Log("Bug par clic : " + (_bugsPerClickLvl + 1) + ", Argent restant : " + Money);
     }
 
     public void UpgradeScreenLvl()
     {
+        Debug.Log("Screen level avant : " + (_screenLvl + 1) + ", Argent avant : " + Money);
         if(_screenLvl +1 <= PRICE_UPGRADE_SCREEN_HEIGHT.Length)
             if(Pay(PRICE_UPGRADE_SCREEN_HEIGHT[_screenLvl]))
                 _screenLvl += 1;
+
+        Debug.Log("Screen level : " + (_screenLvl + 1) + ", Argent restant : " + Money);
     }
 
     void Start()
