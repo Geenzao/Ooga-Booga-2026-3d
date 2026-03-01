@@ -13,7 +13,7 @@ public class RescaleComputer : MonoBehaviour
     public void getBackToRealOriginalSize()
     {
         gameObject.GetComponent<RectTransform>().sizeDelta = realDefaultSize;
-        //gameObject.GetComponent<RectTransform>().anchoredPosition3D = new(gameObject.GetComponent<RectTransform>().position.x, 0.004486f, gameObject.GetComponent<RectTransform>().position.z);
+        gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(gameObject.GetComponent<RectTransform>().anchoredPosition.x, 0.004486f);
         ModeleEcran.localScale = realDefaultScale;
         defaultScale = realDefaultScale;
         defaultSize = realDefaultSize;
