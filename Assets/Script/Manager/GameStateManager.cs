@@ -4,6 +4,7 @@ using UnityEngine;
 public class GameStateManager : MonoBehaviour
 {
     private static GameStateManager _instance;
+    public Action OnGameReset;
 
     public static GameStateManager Instance
     {
@@ -65,6 +66,7 @@ public class GameStateManager : MonoBehaviour
     public void ResetGame()
     {
         StatsManager.Instance.Reset();
+        OnGameReset.Invoke();
         GameStatus = GameState.TUTO;
     }
 
