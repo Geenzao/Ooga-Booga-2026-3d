@@ -172,7 +172,7 @@ public class StatsManager : MonoBehaviour
     {
         int oldBugs = _bugMeter;
         int newBugs = _bugMeter + CurrentBugsPerSec;
-        if (newBugs >= CurrentMaxBugs) { ; } //TODO viré, le mauvais développeur
+        if (newBugs >= CurrentMaxBugs) { return; } //TODO viré, le mauvais développeur
         _bugMeter = newBugs;
         OnBugMeterUpdated(_bugMeter, oldBugs);
     }

@@ -2392,7 +2392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8a5377582c04184cbccf52c8e8bf765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  blueScreen: {fileID: 1950240060}
+  blueScreen: {fileID: 1889732126}
 --- !u!114 &1019382026
 MonoBehaviour:
   m_ObjectHideFlags: 0
