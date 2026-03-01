@@ -4,11 +4,26 @@ using System.Collections.Generic;
 using TMPro;
 using static Unity.Burst.Intrinsics.X86.Avx;
 
+[DefaultExecutionOrder(-100)]
 public class TextTyppeur : MonoBehaviour
 {
     [SerializeField] private List<SerializableTuple<int,string>> BullshitSentance;
     public List<SerializableTuple<int, string>> Last200Bullshit = new();
     [SerializeField] private TMP_Text consoleTypeur;
+
+    int _bugs;
+    int _max_bugs;
+
+    [SerializeField] private TextMeshProUGUI _bugs_Cpt;
+    [SerializeField] private TextMeshProUGUI _rank_Txt;
+
+    public readonly Dictionary<int, string> LEVELS_NAMES = new Dictionary<int, string>
+    {
+        { 0, "Intern" },
+        { 1, "Employee" },
+        { 2, "Manager" },
+        { 3, "Bullcheater master" },
+    };
 
     public void Reset()
     {
@@ -23,7 +38,7 @@ public class TextTyppeur : MonoBehaviour
         MakeARender();
         
     }
-    public void MakeARender(int caca=0,int pipi=1)
+    public void MakeARender()
     {
         //Calcul du nombre de lignes
         if(Last200Bullshit.Count > 200)
@@ -57,11 +72,55 @@ public class TextTyppeur : MonoBehaviour
         }
     }
 
+    private void updateMaxBugsTextColor()
+    {
+        if (_max_bugs <= 0)
+        {
+            _bugs_Cpt.color = Color.green;
+            return;
+        }
+
+        float ratio = Mathf.Clamp01((float)_bugs / _max_bugs);
+        _bugs_Cpt.color = Color.Lerp(Color.green, Color.red, ratio);
+    }
+
+    private void updateMaxBugsText(int maxBugs)
+    {
+        _max_bugs = maxBugs;
+        _bugs_Cpt.text = $"{_bugs}/{_max_bugs} (+{StatsManager.Instance.BUG_PER_SEC_PER_XP_LVL[StatsManager.Instance.XPLvl]}/s)";
+        updateMaxBugsTextColor();
+    }
+
+    private void updateBugsText(int bugs)
+    {
+        _bugs = bugs;
+        _bugs_Cpt.text = $"{_bugs}/{_max_bugs} (+{StatsManager.Instance.BUG_PER_SEC_PER_XP_LVL[StatsManager.Instance.XPLvl]}/s)";
+        updateMaxBugsTextColor();
+    }
+
+    private void HandleScreenLevelUpdated(int newLvl, int oldLvl)
+    {
+        MakeARender();
+        updateMaxBugsText(StatsManager.Instance.MAX_BUG_PER_SCREEN_HEIGHT[newLvl]);
+    }
+
+    private void HandleBugMeterUpdated(int newBugs, int oldBugs)
+    {
+        updateBugsText(newBugs);
+    }
+
+    private void HandleXPLevelUpdated(int newLvl, int oldLvl)
+    {
+        _rank_Txt.text = LEVELS_NAMES[newLvl];
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        StatsManager.Instance.OnBugMeterUpdated += HandleBugMeterUpdated;
         GameStateManager.Instance.OnGameReset += Reset;
-        StatsManager.Instance.OnScreenLevelUpdated += MakeARender;
+        StatsManager.Instance.OnScreenLevelUpdated += HandleScreenLevelUpdated;
+        StatsManager.Instance.OnXPLvlUpdated += HandleXPLevelUpdated;
         AddASentance();
     }
 

@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+[DefaultExecutionOrder(-100)]
 public class StatsBars : MonoBehaviour
 {
     [SerializeField] private Image _foodbar;
@@ -46,6 +47,12 @@ public class StatsBars : MonoBehaviour
         _moneyAmountText.text = newVal + "$";
     }
 
+    private void HandleXpLvlUpdated(int newLvl, int oldLvl)
+    {
+        _moneyMultText.text =
+            "+" + StatsManager.Instance.MONEY_PER_SEC_PER_LVL[newLvl] + "$/sec";
+    }
+
     private void Start()
     {
         _statsmanager = StatsManager.Instance;
@@ -53,7 +60,7 @@ public class StatsBars : MonoBehaviour
         _statsmanager.OnBugMeterUpdated += HandleBugsUpdated;
         _statsmanager.OnXPUpdated += HandleXPUpdated;
         _statsmanager.OnMoneyUpdated += HandleMoneyUpdated;
-        //_statsmanager.OnXpLvlUpdated += HandleXpLvlUpdated;
+        _statsmanager.OnXPLvlUpdated += HandleXpLvlUpdated;
     }
 
     private void updateBar(Image to_update, float amount)

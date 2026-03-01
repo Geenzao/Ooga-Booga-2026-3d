@@ -331,6 +331,7 @@ public class StatsManager : MonoBehaviour
         _xp = 0;
         OnXPUpdated?.Invoke(_xp, oldXP);
 
+        OnXPLvlUpdated?.Invoke(0, _oldLevel);
         _oldLevel = 0;
         
         int oldBugMeter = _bugMeter;
