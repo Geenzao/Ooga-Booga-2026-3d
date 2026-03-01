@@ -48,17 +48,18 @@ public class StatsManager : MonoBehaviour
     public readonly int XP_PER_GOOD_LETTER = 1; // l'xp que rapporte une lettre bonne
 #endif
     public readonly int XP_PER_BAD_LETTER = -3; // l'xp que retire une mauvaise lettre
-    public readonly int[] XP_THRESHOLDS = new int[] { 200, 650, 1500 }; // Les seuils atteindre pour changer de grade : stagiaire, employé, manager
+    public readonly int[] XP_THRESHOLDS = new int[] { 200, 650, 1500, int.MaxValue }; // Les seuils atteindre pour changer de grade : stagiaire, employé, manager
     private int _oldLevel = 0;
     public event Action<int, int> OnXPUpdated;
     public event Action<int, int> OnXPLvlUpdated;
 
     private int _bugMeter; // Jauge de bug, elle augmente a chaque seconde 
-    public readonly int[] BUG_PER_SEC_PER_XP_LVL = new int[] { 2, 5, 10 }; //Nombre de bugs par secondes
+    public readonly int[] BUG_PER_SEC_PER_XP_LVL = new int[] { 2, 5, 10, 15 }; //Nombre de bugs par secondes
     private int _bugsPerClickLvl = 0; // le niveau d'amélioration du nombre de bugs par click
     public readonly int[] BUG_RESOLVE_PER_LVL = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }; // les bug résolu par lvl a chaque click sur l'ecran
     public readonly int[] PRICE_UPGRADE_BUG_RESOLVE= new int[] { 20, 50, 100, 170, 250, 340, 500, 700, 1000 }; // prix de chaque amélioration de l'éfficacité des clicks
     public event Action<int, int> OnBugMeterUpdated;
+    public event Action<int, int> OnBugsPerClicLevelUpdated;
 
 
     private int _screenLvl = 0; // La taille de l'écran qui augmente le nombre maximum de bug possibles
@@ -71,7 +72,7 @@ public class StatsManager : MonoBehaviour
 #else
     private int _money = 0; // L'argent qu'on a actuellement
 #endif
-    public readonly int[] MONEY_PER_SEC_PER_LVL = new int[] { 1, 5, 10 }; // Argent que l'on gagne toute les secondes
+    public readonly int[] MONEY_PER_SEC_PER_LVL = new int[] { 1, 5, 10, 100 }; // Argent que l'on gagne toute les secondes
     public event Action<int, int> OnMoneyUpdated;
 
 
@@ -275,9 +276,12 @@ public class StatsManager : MonoBehaviour
     public void UpgradeBugPerClickLvl()
     {
         Debug.Log("Bug par clic avant : " + (_bugsPerClickLvl + 1) + ", Argent avant : " + Money);
+        int oldClicLevel = _bugsPerClickLvl;
         if(_bugsPerClickLvl +1 <= PRICE_UPGRADE_BUG_RESOLVE.Length)
             if(Pay(PRICE_UPGRADE_BUG_RESOLVE[_bugsPerClickLvl]))
                 _bugsPerClickLvl += 1;
+
+        OnBugsPerClicLevelUpdated?.Invoke(oldClicLevel, _bugsPerClickLvl);
 
         Debug.Log("Bug par clic : " + (_bugsPerClickLvl + 1) + ", Argent restant : " + Money);
     }
@@ -337,7 +341,8 @@ public class StatsManager : MonoBehaviour
         int oldBugMeter = _bugMeter;
         _bugMeter = 0;
         OnBugMeterUpdated?.Invoke(_bugMeter, oldBugMeter);
-        
+
+        OnBugsPerClicLevelUpdated?.Invoke(_bugsPerClickLvl, 0);
         _bugsPerClickLvl = 0;
         
         int oldScreenLvl = _screenLvl;
