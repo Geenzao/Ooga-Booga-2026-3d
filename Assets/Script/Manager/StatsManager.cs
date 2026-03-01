@@ -56,6 +56,7 @@ public class StatsManager : MonoBehaviour
     private int _screenLvl = 0; // La taille de l'écran qui augmente le nombre maximum de bug possibles
     public readonly int[] MAX_BUG_PER_SCREEN_HEIGHT = new int[] { 100, 130, 160, 200 }; // Nombre max de bug par niveau d'amélioration
     public readonly int[] PRICE_UPGRADE_SCREEN_HEIGHT = new int[] { 20, 80, 160 }; // Nombre max de bug par niveau d'amélioration
+    public event Action<int, int> OnScreenLevelUpdated;
 
 #if UNITY_EDITOR
     private int _money = 50; // L'argent qu'on a actuellement
@@ -148,7 +149,12 @@ public class StatsManager : MonoBehaviour
     {
         int oldFood = _foodMeter;
         if (Pay(PRICE_PER_FOOD_LVL[_foodLvl]))
-            _foodMeter += FOOD_PER_BITE[_foodLvl];
+        {
+            if (_foodMeter + FOOD_PER_BITE[_foodLvl] > 100)
+                _foodMeter = 100;
+            else
+                _foodMeter += FOOD_PER_BITE[_foodLvl];
+        }
         OnFoodUpdated?.Invoke(_foodMeter, oldFood);
     }
 
@@ -250,10 +256,13 @@ public class StatsManager : MonoBehaviour
 
     public void UpgradeScreenLvl()
     {
+        int oldScreenLvl = _screenLvl;
         Debug.Log("Screen level avant : " + (_screenLvl + 1) + ", Argent avant : " + Money);
         if(_screenLvl +1 <= PRICE_UPGRADE_SCREEN_HEIGHT.Length)
             if(Pay(PRICE_UPGRADE_SCREEN_HEIGHT[_screenLvl]))
                 _screenLvl += 1;
+
+        OnScreenLevelUpdated?.Invoke(_screenLvl, oldScreenLvl);
 
         Debug.Log("Screen level : " + (_screenLvl + 1) + ", Argent restant : " + Money);
     }

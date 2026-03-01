@@ -5,6 +5,7 @@ using UnityEngine;
 public class StyleOverForComputer : MonoBehaviour{
     [SerializeField] private float multTaille = 1.02f;
     [SerializeField] private RescaleComputer rs;
+    [SerializeField] private TextTyppeur tt;
     private bool isMouseAbove = false;
 
     private void Update()
@@ -24,6 +25,14 @@ public class StyleOverForComputer : MonoBehaviour{
                     gameObject.GetComponent<Outline>().enabled = true;
                     rs.RescaleWidthAndHeight(multTaille);
                     //Debug.Log("Mouse Enter");
+                }
+                if (Input.GetMouseButtonUp(0))
+                {
+                    if (gameObject.name == "ClickableMonitor")
+                    {
+                        StatsManager.Instance.ResolveBug();
+                        tt.AddASentance();
+                    }
                 }
             }
             else

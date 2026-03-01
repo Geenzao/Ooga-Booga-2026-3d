@@ -29,6 +29,25 @@ public class StyleOver : MonoBehaviour{
                     gameObject.transform.localScale = gameObject.transform.localScale * multTaille;
                     //Debug.Log("Mouse Enter");
                 }
+                if(Input.GetMouseButtonUp(0))
+                {
+                    if(gameObject.name == "ClickableFood")
+                    {
+                        StatsManager.Instance.Eat();
+                    }
+                    else if (gameObject.name == "ClickableBoss")
+                    {
+                        switch (GameStateManager.Instance.GameStatus)
+                        {
+                            case GameStateManager.GameState.IN_BOSS_OFFICE:
+                                GameStateManager.Instance.GameStatus = GameStateManager.GameState.IN_OFFICE;
+                                break;
+                            case GameStateManager.GameState.IN_OFFICE:
+                                GameStateManager.Instance.GameStatus = GameStateManager.GameState.IN_BOSS_OFFICE;
+                                break;
+                        }
+                    }
+                }
             }
             else
             {

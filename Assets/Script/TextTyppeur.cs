@@ -58,11 +58,11 @@ public class TextTyppeur : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            AddASentance();
-        }
-    }
+    //void Update()
+    //{
+    //    //if (Input.GetKeyDown(KeyCode.A))
+    //    //{
+    //    //    AddASentance();
+    //    //}
+    //}
 }

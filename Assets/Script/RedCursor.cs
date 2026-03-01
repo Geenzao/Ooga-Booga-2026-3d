@@ -8,7 +8,8 @@ public class RedCursor : MonoBehaviour
 
     private void HandleBugsUpdated(int newVal, int oldVal)
     {
-        gameObject.GetComponent<RectTransform>().sizeDelta = new(defaultSize.x, (float)blueScreen.sizeDelta.y * ((float)newVal / (float)statsManager.CurrentMaxBugs)); 
+        float newSize = (float)newVal / (float)statsManager.CurrentMaxBugs;
+        gameObject.GetComponent<RectTransform>().sizeDelta = new(defaultSize.x, (float)blueScreen.sizeDelta.y * newSize); 
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

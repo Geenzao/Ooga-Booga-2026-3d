@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -30,19 +31,24 @@ public class RescaleComputer : MonoBehaviour
         defaultSize = gameObject.GetComponent<RectTransform>().sizeDelta;
     }
 
+    private void HandleBugsPerClickUpdated(int newLvl, int oldLvl)
+    {
+        RescaleHeightMultiplier((float)Math.Pow(1.2, (float)newLvl));
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         defaultScale = ModeleEcran.localScale;
         defaultSize = gameObject.GetComponent<RectTransform>().sizeDelta;
+        StatsManager.Instance.OnScreenLevelUpdated += HandleBugsPerClickUpdated;
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            RescaleHeightMultiplier(1.2f);
-        }
-    }
+    //private void Update()
+    //{
+    //    //if (Input.GetKeyDown(KeyCode.W))
+    //    //{
+    //    //    RescaleHeightMultiplier(1.2f);
+    //    //}
+    //}
 }
