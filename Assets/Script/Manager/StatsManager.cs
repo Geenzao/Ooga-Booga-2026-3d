@@ -27,6 +27,7 @@ public class StatsManager : MonoBehaviour
 *               VARIABLES              * 
 *--------------------------------------*/
     private float _timer = 0f;
+    public int employeeBug;
 
     private int declencheTuto2 = -1;
 
@@ -271,6 +272,20 @@ public class StatsManager : MonoBehaviour
         }
         OnBugMeterUpdated(_bugMeter, oldBugsCpt);
         return toResolve;
+    }
+
+    public void UseEmployee()
+    {
+        int oldBugsCpt = _bugMeter;
+        if (_bugMeter - employeeBug >= 0)
+        {
+            _bugMeter -= employeeBug;
+        }
+        else
+        {
+            _bugMeter = 0;
+        }
+        OnBugMeterUpdated(_bugMeter, oldBugsCpt);
     }
 
     public void UpgradeBugPerClickLvl()
