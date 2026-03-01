@@ -43,8 +43,9 @@ public class StatsManager : MonoBehaviour
     public readonly int XP_PER_GOOD_LETTER = 1; // l'xp que rapporte une lettre bonne
     public readonly int XP_PER_BAD_LETTER = -5; // l'xp que retire une mauvaise lettre
     public readonly int[] XP_THRESHOLDS = new int[] { 200, 650, 1500 }; // Les seuils atteindre pour changer de grade : stagiaire, employé, manager
+    private int _oldLevel = 0;
     public event Action<int, int> OnXPUpdated;
-
+    public event Action<int, int> OnXPLvlUpdated;
 
     private int _bugMeter; // Jauge de bug, elle augmente a chaque seconde 
     public readonly int[] BUG_PER_SEC_PER_XP_LVL = new int[] { 2, 5, 10 }; //Nombre de bugs par secondes
@@ -95,6 +96,13 @@ public class StatsManager : MonoBehaviour
                 if(_xp >= lvl)
                     currentLvl ++;
             }
+
+            if (currentLvl > _oldLevel)
+                {
+                    OnXPLvlUpdated?.Invoke(currentLvl, _oldLevel);
+                    _oldLevel = currentLvl;
+                }
+
             return currentLvl;
         }
     }
@@ -217,6 +225,7 @@ public class StatsManager : MonoBehaviour
         int oldXP = _xp;
         _xp += XP_PER_GOOD_LETTER;
         OnXPUpdated(_xp, oldXP);
+        int caca = XPLvl;
     }
 
     // Retire de l'XP
@@ -314,6 +323,8 @@ public class StatsManager : MonoBehaviour
         int oldXP = _xp;
         _xp = 0;
         OnXPUpdated?.Invoke(_xp, oldXP);
+
+        _oldLevel = 0;
         
         int oldBugMeter = _bugMeter;
         _bugMeter = 0;
