@@ -169,6 +169,7 @@ public class Ecriveur : MonoBehaviour
         //Placement de premières phrases
         indexesOfErrorsInPreviousSentence = new();
         indexesOfErrorsInActualSentence = new();
+        indexOfActualCharacter = 0;
         SayedToBoss.text = "";
         textPrevious = "";
         sentencePrevious.text = "";
@@ -183,6 +184,9 @@ public class Ecriveur : MonoBehaviour
     {
         _statsmanager = StatsManager.Instance;
         //Placement de premières phrases
+        indexesOfErrorsInPreviousSentence = new();
+        indexesOfErrorsInActualSentence = new();
+        indexOfActualCharacter = 0;
         SayedToBoss.text = "";
         textPrevious = "";
         sentencePrevious.text = "";
