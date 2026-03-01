@@ -1041,8 +1041,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "Wow !\nYou work so well that the boss is happy of your work and promote
-    you as a manager.\nYou now have responsabilities and more bugs to solve. \nGood
-    luck !"
+    you as a manager.\nYou now have responsabilities and more bugs to solve. \nSometimes,
+    some employees might come to you and you will be able to give them your work.
+    (just click on them)\nGood luck !"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
