@@ -69,7 +69,7 @@ public class StatsManager : MonoBehaviour
     public event Action<int, int> OnScreenLevelUpdated;
 
 #if UNITY_EDITOR
-    private int _money = 50; // L'argent qu'on a actuellement
+    private int _money = 5000; // L'argent qu'on a actuellement
 #else
     private int _money = 0; // L'argent qu'on a actuellement
 #endif

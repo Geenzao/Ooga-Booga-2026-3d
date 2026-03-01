@@ -41,7 +41,7 @@ public class RescaleComputer : MonoBehaviour
 
     private void HandleBugsPerClickUpdated(int newLvl, int oldLvl)
     {
-        RescaleHeightMultiplier((float)Math.Pow(1.2, (float)newLvl));
+        RescaleHeightMultiplier(1f + 0.1f * (float)newLvl);
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
