@@ -261,6 +261,7 @@ public class StatsManager : MonoBehaviour
     public void UpgradeScreenLvl()
     {
         int oldScreenLvl = _screenLvl;
+        
         Debug.Log("Screen level avant : " + (_screenLvl + 1) + ", Argent avant : " + Money);
         if(_screenLvl +1 <= PRICE_UPGRADE_SCREEN_HEIGHT.Length)
             if(Pay(PRICE_UPGRADE_SCREEN_HEIGHT[_screenLvl]))

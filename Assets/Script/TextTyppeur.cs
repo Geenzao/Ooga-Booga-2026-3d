@@ -10,6 +10,12 @@ public class TextTyppeur : MonoBehaviour
     public List<SerializableTuple<int, string>> Last200Bullshit = new();
     [SerializeField] private TMP_Text consoleTypeur;
 
+    public void Reset()
+    {
+        Last200Bullshit.Clear();
+        AddASentance();
+    }
+
     public void AddASentance()
     {
         SerializableTuple<int, string> choosenSentance = BullshitSentance[UnityEngine.Random.Range(0, BullshitSentance.Count)];
@@ -17,7 +23,7 @@ public class TextTyppeur : MonoBehaviour
         MakeARender();
         
     }
-    public void MakeARender()
+    public void MakeARender(int caca=0,int pipi=1)
     {
         //Calcul du nombre de lignes
         if(Last200Bullshit.Count > 200)
@@ -54,6 +60,8 @@ public class TextTyppeur : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        GameStateManager.Instance.OnGameReset += Reset;
+        StatsManager.Instance.OnScreenLevelUpdated += MakeARender;
         AddASentance();
     }
 
