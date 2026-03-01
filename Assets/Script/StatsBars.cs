@@ -8,6 +8,7 @@ public class StatsBars : MonoBehaviour
     [SerializeField] private Image _bugsbar;
     [SerializeField] private Image _xpbar;
     [SerializeField] private TextMeshProUGUI _moneyAmountText;
+    [SerializeField] private TextMeshProUGUI _moneyMultText;
 
     private StatsManager _statsmanager;
 
@@ -52,6 +53,7 @@ public class StatsBars : MonoBehaviour
         _statsmanager.OnBugMeterUpdated += HandleBugsUpdated;
         _statsmanager.OnXPUpdated += HandleXPUpdated;
         _statsmanager.OnMoneyUpdated += HandleMoneyUpdated;
+        //_statsmanager.OnXpLvlUpdated += HandleXpLvlUpdated;
     }
 
     private void updateBar(Image to_update, float amount)

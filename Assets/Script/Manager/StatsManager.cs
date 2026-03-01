@@ -47,7 +47,7 @@ public class StatsManager : MonoBehaviour
 #else
     public readonly int XP_PER_GOOD_LETTER = 1; // l'xp que rapporte une lettre bonne
 #endif
-    public readonly int XP_PER_BAD_LETTER = -5; // l'xp que retire une mauvaise lettre
+    public readonly int XP_PER_BAD_LETTER = -3; // l'xp que retire une mauvaise lettre
     public readonly int[] XP_THRESHOLDS = new int[] { 200, 650, 1500 }; // Les seuils atteindre pour changer de grade : stagiaire, employé, manager
     private int _oldLevel = 0;
     public event Action<int, int> OnXPUpdated;
@@ -285,6 +285,7 @@ public class StatsManager : MonoBehaviour
     public void UpgradeScreenLvl()
     {
         int oldScreenLvl = _screenLvl;
+        
         Debug.Log("Screen level avant : " + (_screenLvl + 1) + ", Argent avant : " + Money);
         if(_screenLvl +1 <= PRICE_UPGRADE_SCREEN_HEIGHT.Length)
             if(Pay(PRICE_UPGRADE_SCREEN_HEIGHT[_screenLvl]))

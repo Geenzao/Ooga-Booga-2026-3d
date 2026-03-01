@@ -169,6 +169,23 @@ public class Ecriveur : MonoBehaviour
 
     void Start()
     {
+        GameStateManager.Instance.OnGameReset += Reset;
+        _statsmanager = StatsManager.Instance;
+        //Placement de premières phrases
+        indexesOfErrorsInPreviousSentence = new();
+        indexesOfErrorsInActualSentence = new();
+        SayedToBoss.text = "";
+        textPrevious = "";
+        sentencePrevious.text = "";
+        DrawRandomSentenceForActualSentence();
+        bossAngryI.gameObject.SetActive(false);
+        bossSurprisedI.gameObject.SetActive(false);
+        bossHappyI.gameObject.SetActive(true);
+        sentenceActual.text = GenerateBalisedText(textActual,indexesOfErrorsInActualSentence);
+    }
+
+    public void Reset()
+    {
         _statsmanager = StatsManager.Instance;
         //Placement de premières phrases
         SayedToBoss.text = "";
@@ -178,7 +195,7 @@ public class Ecriveur : MonoBehaviour
         bossAngryI.gameObject.SetActive(false);
         bossSurprisedI.gameObject.SetActive(false);
         bossHappyI.gameObject.SetActive(true);
-        sentenceActual.text = GenerateBalisedText(textActual,indexesOfErrorsInActualSentence);
+        sentenceActual.text = GenerateBalisedText(textActual, indexesOfErrorsInActualSentence);
     }
 
     public void OnNewCharacter(char character)

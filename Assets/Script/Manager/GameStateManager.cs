@@ -78,7 +78,7 @@ public class GameStateManager : MonoBehaviour
     public void ResetGame()
     {
         StatsManager.Instance.Reset();
-        OnGameReset.Invoke();
+        OnGameReset?.Invoke();
         GameStatus = GameState.IN_OFFICE;
     }
 

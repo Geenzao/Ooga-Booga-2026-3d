@@ -16,6 +16,14 @@ public class liseur : MonoBehaviour
         inputField.Select();   
     }
 
+    private void Update()
+    {
+        if (GameStateManager.Instance.GameStatus == GameStateManager.GameState.IN_BOSS_OFFICE)
+        {
+            inputField.Select();
+        }
+    }
+
     public void OnTextChanged(string texte)
     {
         foreach (char c in texte) {

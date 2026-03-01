@@ -5,8 +5,16 @@ using UnityEngine;
 public class RescaleComputer : MonoBehaviour
 {
     private Vector2 defaultSize;
+    private Vector2 realDefaultSize;
     private Vector3 defaultScale;
+    private Vector3 realDefaultScale;
     [SerializeField] Transform ModeleEcran;
+
+    public void getBackToRealOriginalSize()
+    {
+        gameObject.GetComponent<RectTransform>().sizeDelta = realDefaultSize;
+        ModeleEcran.localScale = realDefaultScale;
+    }
 
     public void getBackToOriginalSize()
     {
@@ -39,7 +47,10 @@ public class RescaleComputer : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        GameStateManager.Instance.OnGameReset += getBackToRealOriginalSize;
         defaultScale = ModeleEcran.localScale;
+        realDefaultSize = gameObject.GetComponent<RectTransform>().sizeDelta;
+        realDefaultScale = ModeleEcran.localScale;
         defaultSize = gameObject.GetComponent<RectTransform>().sizeDelta;
         StatsManager.Instance.OnScreenLevelUpdated += HandleBugsPerClickUpdated;
     }
