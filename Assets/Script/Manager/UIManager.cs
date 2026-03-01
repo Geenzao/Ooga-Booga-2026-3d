@@ -14,6 +14,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _statsPanel;
     [SerializeField] private GameObject _bossPanel;
     [SerializeField] private GameObject _shopPanel;
+    [SerializeField] private GameObject _deathPanel;
+    [SerializeField] private GameObject _firedPanel;
+
+    [SerializeField] private List<TextMeshProUGUI> _scoreTexts;
 
     [SerializeField] private CanvasGroup _blackPanel;
     [SerializeField] private float fadeDuration = 0.5f;
@@ -62,6 +66,15 @@ public class UIManager : MonoBehaviour
             go.SetActive(true);
     }
 
+    private void setScoreText()
+    {
+        foreach (TextMeshProUGUI scoreText in _scoreTexts)
+        {
+            scoreText.text =
+                "Score : " + StatsManager.Instance.XP;
+        }
+    }
+
     private async void HandleGameStatusUpdated(GameStateManager.GameState newState, GameStateManager.GameState oldState)
     {
         switch (newState)
@@ -72,17 +85,34 @@ public class UIManager : MonoBehaviour
             //    _shopPanel.SetActive(false);
             //    break;
             case GameStateManager.GameState.IN_OFFICE:
-                SwitchUI(new List<GameObject> { _bossPanel }, new List<GameObject> { _shopPanel, _statsPanel });
+                SwitchUI(new List<GameObject> { _bossPanel, _firedPanel, _deathPanel }, new List<GameObject> { _shopPanel, _statsPanel });
                 break;
             case GameStateManager.GameState.IN_BOSS_OFFICE:
-                SwitchUI(new List<GameObject> { _shopPanel }, new List<GameObject> { _bossPanel, _statsPanel });
+                SwitchUI(new List<GameObject> { _shopPanel, _firedPanel, _deathPanel }, new List<GameObject> { _bossPanel, _statsPanel });
                 inputField.Select();
                 inputField.ActivateInputField();
                 break;
             case GameStateManager.GameState.DEAD:
+                setScoreText();
+                SwitchUI(new List<GameObject> { _bossPanel, _shopPanel, _statsPanel, _firedPanel }, new List<GameObject> { _deathPanel });
                 break;
-
+            case GameStateManager.GameState.FIRED:
+                setScoreText();
+                SwitchUI(new List<GameObject> { _bossPanel, _shopPanel, _statsPanel, _deathPanel }, new List<GameObject> { _firedPanel });
+                break;
         }
+    }
+
+    //Would be moved to another script if it wasnt a jam
+    public void OnRetryClick()
+    {
+        GameStateManager.Instance.ResetGame();
+    }
+
+    //Would be moved to another script if it wasnt a jam
+    public void OnQuitClick()
+    {
+        Application.Quit();
     }
 
 

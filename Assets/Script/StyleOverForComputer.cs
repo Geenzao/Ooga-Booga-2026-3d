@@ -17,7 +17,11 @@ public class StyleOverForComputer : MonoBehaviour{
         if (Physics.Raycast(ray, out hit))
         {
             //Est dessus
-            if (hit.collider.gameObject == gameObject)
+            if (
+                hit.collider.gameObject == gameObject
+                &&
+                GameStateManager.Instance.GameStatus == GameStateManager.GameState.IN_OFFICE
+                )
             {
                 if (!isMouseAbove)
                 {

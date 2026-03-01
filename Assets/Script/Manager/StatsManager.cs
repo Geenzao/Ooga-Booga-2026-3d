@@ -163,7 +163,8 @@ public class StatsManager : MonoBehaviour
         int oldFood = _foodMeter;
         if ((_foodMeter -= nb) <= 0) {
             GameStateManager.Instance.GameStatus = GameStateManager.GameState.DEAD;
-        } //TODO die
+            return;
+        }
         _foodMeter -= nb;
         OnFoodUpdated?.Invoke(_foodMeter, oldFood);
     }
@@ -172,7 +173,10 @@ public class StatsManager : MonoBehaviour
     {
         int oldBugs = _bugMeter;
         int newBugs = _bugMeter + CurrentBugsPerSec;
-        if (newBugs >= CurrentMaxBugs) { return; } //TODO viré, le mauvais développeur
+        if (newBugs >= CurrentMaxBugs) {
+            GameStateManager.Instance.GameStatus = GameStateManager.GameState.FIRED;
+            return;
+        } //le mauvais développeur
         _bugMeter = newBugs;
         OnBugMeterUpdated(_bugMeter, oldBugs);
     }
@@ -288,8 +292,35 @@ public class StatsManager : MonoBehaviour
 
     private void Init()
     {
-        // TODO : initialiser toute les valeur pour le départ et le reset
-        OnMoneyUpdated?.Invoke(Money, 0);
+        _timer = 0f;
+        
+        int oldFood = _foodMeter;
+        _foodMeter = 100;
+        OnFoodUpdated?.Invoke(_foodMeter, oldFood);
+        
+        _foodLvl = 0;
+        
+        int oldXP = _xp;
+        _xp = 0;
+        OnXPUpdated?.Invoke(_xp, oldXP);
+        
+        int oldBugMeter = _bugMeter;
+        _bugMeter = 0;
+        OnBugMeterUpdated?.Invoke(_bugMeter, oldBugMeter);
+        
+        _bugsPerClickLvl = 0;
+        
+        int oldScreenLvl = _screenLvl;
+        _screenLvl = 0;
+        OnScreenLevelUpdated?.Invoke(_screenLvl, oldScreenLvl);
+        
+        int oldMoney = _money;
+#if UNITY_EDITOR
+        _money = 50;
+#else
+        _money = 0;
+#endif
+        OnMoneyUpdated?.Invoke(_money, oldMoney);
     }
 
     // Update is called once per frame

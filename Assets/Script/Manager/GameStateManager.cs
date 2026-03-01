@@ -43,8 +43,29 @@ public class GameStateManager : MonoBehaviour
         {
             GameState oldGameState = _currentGameState;
             _currentGameState = value;
+
+            switch (_currentGameState)
+            {
+                case GameState.FIRED:
+                case GameState.DEAD:
+                    Time.timeScale = 0f;
+                    break;
+                case GameState.TUTO:
+                    GameStatus = GameState.IN_OFFICE; //TODO faire le TUTO
+                    break;
+                default:
+                    Time.timeScale = 1f;
+                    break;
+            }
+
             OnGameStatusUpdated?.Invoke(_currentGameState, oldGameState);
         }
+    }
+
+    public void ResetGame()
+    {
+        StatsManager.Instance.Reset();
+        GameStatus = GameState.TUTO;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
