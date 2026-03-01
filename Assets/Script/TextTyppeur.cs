@@ -16,6 +16,7 @@ public class TextTyppeur : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI _bugs_Cpt;
     [SerializeField] private TextMeshProUGUI _rank_Txt;
+    [SerializeField] private TextMeshProUGUI _clic_efficiency_Txt;
 
     public readonly Dictionary<int, string> LEVELS_NAMES = new Dictionary<int, string>
     {
@@ -114,10 +115,16 @@ public class TextTyppeur : MonoBehaviour
         _rank_Txt.text = LEVELS_NAMES[newLvl];
     }
 
+    private void HandleBugPerClicUpdated(int newLvl, int oldLvl)
+    {
+        _clic_efficiency_Txt.text = $"Clic efficiency: {StatsManager.Instance.BUG_RESOLVE_PER_LVL[StatsManager.Instance.BugsPerClickLvl]}";
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         StatsManager.Instance.OnBugMeterUpdated += HandleBugMeterUpdated;
+        StatsManager.Instance.OnBugsPerClicLevelUpdated += HandleBugPerClicUpdated;
         GameStateManager.Instance.OnGameReset += Reset;
         StatsManager.Instance.OnScreenLevelUpdated += HandleScreenLevelUpdated;
         StatsManager.Instance.OnXPLvlUpdated += HandleXPLevelUpdated;

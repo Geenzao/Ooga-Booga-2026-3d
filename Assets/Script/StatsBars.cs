@@ -10,6 +10,7 @@ public class StatsBars : MonoBehaviour
     [SerializeField] private Image _xpbar;
     [SerializeField] private TextMeshProUGUI _moneyAmountText;
     [SerializeField] private TextMeshProUGUI _moneyMultText;
+    [SerializeField] private TextMeshProUGUI _xpText;
 
     private StatsManager _statsmanager;
 
@@ -40,6 +41,8 @@ public class StatsBars : MonoBehaviour
         }
         float percent = (float)currentLevelXp / (float)currentLevelAllXp;
         updateBar(_xpbar, percent);
+
+        _xpText.text = $"Boss satisfaction points: {newVal}";
     }
 
     private void HandleMoneyUpdated(int newVal, int oldVal)
