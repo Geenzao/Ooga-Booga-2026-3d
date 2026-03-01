@@ -43,7 +43,7 @@ public class StatsManager : MonoBehaviour
     // public readonly int XP_PER_GOOD_LETTER = 1; // l'xp que rapporte une lettre bonne
 
 #if UNITY_EDITOR
-    public readonly int XP_PER_GOOD_LETTER = 20; // l'xp que rapporte une lettre bonne
+    public readonly int XP_PER_GOOD_LETTER = 50; // l'xp que rapporte une lettre bonne
 #else
     public readonly int XP_PER_GOOD_LETTER = 1; // l'xp que rapporte une lettre bonne
 #endif

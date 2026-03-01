@@ -1,12 +1,7 @@
-using NUnit.Framework.Constraints;
 using System;
-using System.Numerics;
 using TMPro;
 using UnityEngine;
 using System.Collections.Generic;
-using Unity.Profiling.Editor;
-using UnityEngine.LightTransport;
-using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 
@@ -200,6 +195,8 @@ public class Ecriveur : MonoBehaviour
 
     public void OnNewCharacter(char character)
     {
+        if (GameStateManager.Instance.GameStatus != GameStateManager.GameState.IN_BOSS_OFFICE)
+            return;
         SayedToBoss.text += character;
         //Vérification des erreurs
         if (character == textActual[indexOfActualCharacter])
