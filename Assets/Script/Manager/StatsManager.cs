@@ -40,7 +40,13 @@ public class StatsManager : MonoBehaviour
 
 
     private int _xp = 0; // Jauge d'XP, les lettres rapporte 1 et une erreur retire 5
+    // public readonly int XP_PER_GOOD_LETTER = 1; // l'xp que rapporte une lettre bonne
+
+#if UNITY_EDITOR
+    public readonly int XP_PER_GOOD_LETTER = 20; // l'xp que rapporte une lettre bonne
+#else
     public readonly int XP_PER_GOOD_LETTER = 1; // l'xp que rapporte une lettre bonne
+#endif
     public readonly int XP_PER_BAD_LETTER = -5; // l'xp que retire une mauvaise lettre
     public readonly int[] XP_THRESHOLDS = new int[] { 200, 650, 1500 }; // Les seuils atteindre pour changer de grade : stagiaire, employé, manager
     private int _oldLevel = 0;

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class TutoManager : MonoBehaviour
 {
     private static TutoManager _instance;
+    private GameStateManager.GameState _stateBeforePromotion;
 
     [SerializeField] private GameObject _tuto1;
     [SerializeField] private Button _quitTuto1;
@@ -103,6 +104,7 @@ public class TutoManager : MonoBehaviour
     {
         if (_promote1 != null)
         {
+            _stateBeforePromotion = GameStateManager.Instance.GameStatus;
             _promote1.SetActive(true);
             GameStateManager.Instance.GameStatus = GameStateManager.GameState.TUTO;
         }
@@ -112,6 +114,7 @@ public class TutoManager : MonoBehaviour
     {
         if (_promote2 != null)
         {
+            _stateBeforePromotion = GameStateManager.Instance.GameStatus;
             _promote2.SetActive(true);
             GameStateManager.Instance.GameStatus = GameStateManager.GameState.TUTO;
         }
@@ -121,6 +124,7 @@ public class TutoManager : MonoBehaviour
     {
         if (_promote3 != null)
         {
+            _stateBeforePromotion = GameStateManager.Instance.GameStatus;
             _promote3.SetActive(true);
             GameStateManager.Instance.GameStatus = GameStateManager.GameState.TUTO;
         }
@@ -158,7 +162,7 @@ public class TutoManager : MonoBehaviour
         if (_promote1 != null)
         {
             _promote1.SetActive(false);
-            GameStateManager.Instance.GameStatus = GameStateManager.GameState.IN_BOSS_OFFICE;
+            GameStateManager.Instance.GameStatus = _stateBeforePromotion;
         }
     }
 
@@ -167,7 +171,7 @@ public class TutoManager : MonoBehaviour
         if (_promote2 != null)
         {
             _promote2.SetActive(false);
-            GameStateManager.Instance.GameStatus = GameStateManager.GameState.IN_BOSS_OFFICE;
+            GameStateManager.Instance.GameStatus = _stateBeforePromotion;
         }
     }
 
@@ -176,7 +180,7 @@ public class TutoManager : MonoBehaviour
         if (_promote3 != null)
         {
             _promote3.SetActive(false);
-            GameStateManager.Instance.GameStatus = GameStateManager.GameState.IN_BOSS_OFFICE;
+            GameStateManager.Instance.GameStatus = _stateBeforePromotion;
         }
     }
 }
