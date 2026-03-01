@@ -5,6 +5,8 @@ public class GameStateManager : MonoBehaviour
 {
     private static GameStateManager _instance;
     public Action OnGameReset;
+    
+    private bool _hasShownTuto3 = false;
 
     public static GameStateManager Instance
     {
@@ -30,10 +32,10 @@ public class GameStateManager : MonoBehaviour
         IN_OFFICE,
         IN_BOSS_OFFICE,
         DEAD,
-        FIRED //viré (le mauvais développeur)
+        FIRED //virï¿½ (le mauvais dï¿½veloppeur)
     }
 
-    private readonly GameState DEFAULT_GAME_STATE = GameState.IN_OFFICE;
+    private readonly GameState DEFAULT_GAME_STATE = GameState.TUTO;
     private GameState _currentGameState;
     public event Action<GameState, GameState> OnGameStatusUpdated;
 
@@ -52,7 +54,17 @@ public class GameStateManager : MonoBehaviour
                     Time.timeScale = 0f;
                     break;
                 case GameState.TUTO:
-                    GameStatus = GameState.IN_OFFICE; //TODO faire le TUTO
+                    Time.timeScale = 0f;
+                    break;
+                case GameState.IN_BOSS_OFFICE:
+                    // DÃ©clencher le tuto 3 la premiÃ¨re fois qu'on entre dans le boss office
+                    if (!_hasShownTuto3)
+                    {
+                        _hasShownTuto3 = true;
+                        TutoManager.Instance.ShowTuto3();
+                        break;
+                    }
+                    Time.timeScale = 1f;
                     break;
                 default:
                     Time.timeScale = 1f;
@@ -67,7 +79,7 @@ public class GameStateManager : MonoBehaviour
     {
         StatsManager.Instance.Reset();
         OnGameReset.Invoke();
-        GameStatus = GameState.TUTO;
+        GameStatus = GameState.IN_OFFICE;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

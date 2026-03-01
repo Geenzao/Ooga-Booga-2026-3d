@@ -79,11 +79,9 @@ public class UIManager : MonoBehaviour
     {
         switch (newState)
         {
-            //case GameStateManager.GameState.TUTO:
-            //    _statsPanel.SetActive(false);
-            //    _bossPanel.SetActive(false);
-            //    _shopPanel.SetActive(false);
-            //    break;
+            case GameStateManager.GameState.TUTO:
+                // Ne rien faire, on garde l'UI actuelle et on affiche juste le tuto par-dessus
+                break;
             case GameStateManager.GameState.IN_OFFICE:
                 SwitchUI(new List<GameObject> { _bossPanel, _firedPanel, _deathPanel }, new List<GameObject> { _shopPanel, _statsPanel });
                 break;

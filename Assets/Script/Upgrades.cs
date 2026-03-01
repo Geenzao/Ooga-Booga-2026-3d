@@ -52,7 +52,7 @@ public class Upgrades : MonoBehaviour
         {
             int nextUpgradePrice = _statsmanager.PRICE_UPGRADE_SCREEN_HEIGHT[_statsmanager.ScreenLvl];
             _upgradeScreenSizeBtn.interactable = _statsmanager.Money >= nextUpgradePrice;
-            _upgradeScreenSizeText.text = $"Upgrade Screen Size \n{nextUpgradePrice}$";
+            _upgradeScreenSizeText.text = $"Upgrade Bug Capacity \n{nextUpgradePrice}$";
         }
         else
         {

@@ -28,6 +28,7 @@ public class StatsManager : MonoBehaviour
 *--------------------------------------*/
     private float _timer = 0f;
 
+    private int declencheTuto2 = -1;
 
     private int _foodMeter = 100; // Jauge de bouffe qui baisse dans le temps et augmente quand on mange
     public readonly int FOOD_USED_PER_SEC = 1; // On perd 1 de bouffe par seconde
@@ -166,6 +167,14 @@ public class StatsManager : MonoBehaviour
             return;
         }
         _foodMeter -= nb;
+        
+        // Déclencher le tuto 2 la première fois que la jauge atteint 50 ou moins
+        if (declencheTuto2 == 0 && _foodMeter <= 50)
+        {
+            declencheTuto2++;
+            TutoManager.Instance.ShowTuto2();
+        }
+        
         OnFoodUpdated?.Invoke(_foodMeter, oldFood);
     }
 
@@ -293,6 +302,8 @@ public class StatsManager : MonoBehaviour
     private void Init()
     {
         _timer = 0f;
+        
+        declencheTuto2++;
         
         int oldFood = _foodMeter;
         _foodMeter = 100;
