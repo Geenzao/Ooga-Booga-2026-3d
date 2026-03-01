@@ -6,6 +6,16 @@ public class StyleOver : MonoBehaviour{
     [SerializeField] private float multTaille = 1.06f;
     private Vector3 initialScale;
     private bool isMouseAbove = false;
+    private bool aggrandissementAutorisation = true;
+
+    public void noModification()
+    {
+        aggrandissementAutorisation = false;
+        gameObject.transform.localScale = initialScale;
+        gameObject.GetComponent<Outline>().enabled = false;
+        aggrandissementAutorisation = false;
+        enabled = false;
+    }
 
     private void Start()
     {
@@ -28,9 +38,12 @@ public class StyleOver : MonoBehaviour{
             {
                 if (!isMouseAbove)
                 {
+                    if(aggrandissementAutorisation)
+                    {
+                        gameObject.GetComponent<Outline>().enabled = true;
+                        gameObject.transform.localScale = gameObject.transform.localScale * multTaille;
+                    }
                     isMouseAbove = true;
-                    gameObject.GetComponent<Outline>().enabled = true;
-                    gameObject.transform.localScale = gameObject.transform.localScale * multTaille;
                     //Debug.Log("Mouse Enter");
                 }
                 if(Input.GetMouseButtonUp(0))
@@ -50,6 +63,10 @@ public class StyleOver : MonoBehaviour{
                                 GameStateManager.Instance.GameStatus = GameStateManager.GameState.IN_BOSS_OFFICE;
                                 break;
                         }
+                    }else if (gameObject.name == "ClickableFemale(Clone)")
+                    {
+                        gameObject.GetComponent<Walkfromto>().Rentrer();
+                        StatsManager.Instance.UseEmployee();
                     }
                 }
             }

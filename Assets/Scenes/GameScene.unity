@@ -937,6 +937,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 256555855}
   m_CullTransparentMesh: 1
+--- !u!1 &259374832
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 259374833}
+  m_Layer: 0
+  m_Name: SpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &259374833
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 259374832}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -6.41, y: -0.4, z: -6.72}
+  m_LocalScale: {x: 1.24, y: 1.24, z: 1.24}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1851521388}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &306782305
 GameObject:
   m_ObjectHideFlags: 0
@@ -2012,6 +2043,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16d5761df46b3174bb8374f796d74e47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameStateManager
+--- !u!1 &564902618
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 564902619}
+  m_Layer: 0
+  m_Name: EndPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &564902619
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 564902618}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: -0.06, y: -0.4, z: -6.72}
+  m_LocalScale: {x: 1.24, y: 1.24, z: 1.24}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1851521388}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &624466022
 GameObject:
   m_ObjectHideFlags: 0
@@ -3216,9 +3278,6 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e3fb4813713cbf941bb990571dcbf3fc, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1014168436}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e3fb4813713cbf941bb990571dcbf3fc, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1014168435}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e3fb4813713cbf941bb990571dcbf3fc, type: 3}
       insertIndex: -1
@@ -3257,18 +3316,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1014168436
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1014168434}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46fe7ad2a4e3a0940b23d764c08cacea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Boss
 --- !u!114 &1014168438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3937,6 +3984,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1f29f783829ebe549a95a55ca4f6e4ec, type: 3}
   m_PrefabInstance: {fileID: 1216565684}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1239843412
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1239843413}
+  m_Layer: 0
+  m_Name: Leaving
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1239843413
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1239843412}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -6.41, y: -0.4, z: -6.72}
+  m_LocalScale: {x: 1.24, y: 1.24, z: 1.24}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1851521388}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1001 &1257568264
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5820,6 +5898,59 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d9a33d2efa0fbae42a305bc42a58bdfb, type: 3}
   m_PrefabInstance: {fileID: 1838713971}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1851521387
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1851521388}
+  - component: {fileID: 1851521389}
+  m_Layer: 0
+  m_Name: DinoSalarie
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1851521388
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1851521387}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 259374833}
+  - {fileID: 564902619}
+  - {fileID: 1239843413}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1851521389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1851521387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 846c7ca4d8896af4c953183fde3ef86e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnDinoEmployee
+  spawnPoint: {fileID: 259374833}
+  endPoint: {fileID: 564902619}
+  leaving: {fileID: 1239843413}
+  prefabDinoEmployee: {fileID: 7718398919518032524, guid: 0015ba7d10818f145b4ccd82f43d3797, type: 3}
+  timeminBetweenTwoEmployees: 0
+  timemaxBetweenTwoEmployees: 10
 --- !u!1 &1881434629
 GameObject:
   m_ObjectHideFlags: 0
@@ -6089,6 +6220,18 @@ MonoBehaviour:
     Item2: int main void(){\n\tSetupAssync();
   - Item1: 4
     Item2: for(int i=0;i<5;i++)\n{\n\ti=i+5\n}
+  - Item1: 2
+    Item2: While(true){\n\tDelayGTA6;
+  - Item1: 1
+    Item2: AssignVariable();
+  - Item1: 4
+    Item2: struct Zobbeur\n{\n\tprivate int ZobThemAll;\n}
+  - Item1: 1
+    Item2: checkConstraint();
+  - Item1: 1
+    Item2: nbDino++;
+  - Item1: 4
+    Item2: for(auto dino in dinoTab)\n{\n\tstd::cout<<dino\n}
   Last200Bullshit: []
   consoleTypeur: {fileID: 1881434631}
 --- !u!114 &1889732132
@@ -8142,6 +8285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02cd6fa35ce757d4cb3e3be899cfbad7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatsManager
+  employeeBug: 30
 --- !u!114 &4558143265990901407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9609,3 +9753,4 @@ SceneRoots:
   - {fileID: 1084031208}
   - {fileID: 1014168433}
   - {fileID: 374029930}
+  - {fileID: 1851521388}
